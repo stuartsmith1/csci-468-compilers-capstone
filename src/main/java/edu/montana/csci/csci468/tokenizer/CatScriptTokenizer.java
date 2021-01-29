@@ -40,7 +40,17 @@ public class CatScriptTokenizer {
 
     private boolean scanString() {
         // TODO implement string scanning here!
-        return false;
+        if(peek() == '\"') {
+            int start = ++postion;
+            while (isAlpha(peek())) {
+                takeChar();
+            }
+            takeChar();
+            tokenList.addToken(STRING, src.substring(start, postion - 1), start, postion, line, lineOffset);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private boolean scanIdentifier() {
