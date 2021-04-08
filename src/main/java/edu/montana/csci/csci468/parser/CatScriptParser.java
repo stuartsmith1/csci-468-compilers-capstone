@@ -7,7 +7,9 @@ import edu.montana.csci.csci468.tokenizer.Token;
 import edu.montana.csci.csci468.tokenizer.TokenList;
 import edu.montana.csci.csci468.tokenizer.TokenType;
 
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
+import java.util.List;
 
 import static edu.montana.csci.csci468.tokenizer.TokenType.*;
 
@@ -51,11 +53,165 @@ public class CatScriptParser {
     //============================================================
 
     private Statement parseProgramStatement() {
+        Statement statement = null;
+        if (currentFunctionDefinition != null){
+            statement = parseReturnStatement();
+        }
+        if(statement != null) { return statement;}
+        statement = parseStatement();
+        if (statement != null) { return statement; }
+        statement = parseFunctionDeclaration();
+        if (statement != null) { return statement; }
+        return new SyntaxErrorStatement(tokens.consumeToken());
+    }
+
+    private Statement parseReturnStatement() {
+        if(tokens.matchAndConsume(RETURN)){
+            ReturnStatement returnStatement = new ReturnStatement();
+            returnStatement.setFunctionDefinition(currentFunctionDefinition);
+            if(!tokens.match(RIGHT_BRACE)) {
+                Expression expression = parseExpression();
+                returnStatement.setExpression(expression);
+            }
+            return returnStatement;
+        }
+        return null;
+    }
+
+    private Statement parseFunctionDeclaration(){
+        if(tokens.matchAndConsume(FUNCTION)){
+            FunctionDefinitionStatement functionDef = new FunctionDefinitionStatement();
+            Token functionName = require(IDENTIFIER, functionDef);
+            functionDef.setName(functionName.getStringValue());
+            require(LEFT_PAREN, functionDef);
+            if (!tokens.matchAndConsume(RIGHT_PAREN)){
+                do {
+                    TypeLiteral type = null;
+                    Token identifier = require(IDENTIFIER, functionDef);
+                    if(tokens.matchAndConsume(COLON)){
+                        type = parseTypeExpression();
+                    }
+                    functionDef.addParameter(identifier.getStringValue(), type);
+                }while (tokens.matchAndConsume(COMMA));
+                require(RIGHT_PAREN, functionDef);
+            }
+            if(tokens.matchAndConsume(COLON)){
+                functionDef.setType(parseTypeExpression());
+            }else{
+                functionDef.setType(null);
+            }
+            require(LEFT_BRACE, functionDef);
+            currentFunctionDefinition = functionDef;
+            try{
+                ArrayList<Statement> statements = new ArrayList<>();
+                while (!tokens.match(RIGHT_BRACE) && !tokens.match(EOF)) {
+                    Statement statement = parseProgramStatement();
+                    statements.add(statement);
+                }
+                require(RIGHT_BRACE, functionDef);
+                functionDef.setBody(statements);
+            }finally {
+                currentFunctionDefinition = null;
+            }
+            return functionDef;
+        }
+        return null;
+    }
+
+    private Statement parseStatement(){
         Statement printStmt = parsePrintStatement();
         if (printStmt != null) {
             return printStmt;
         }
-        return new SyntaxErrorStatement(tokens.consumeToken());
+        if (tokens.match(FOR)){
+            return parseForStatement();
+        }
+        if (tokens.match(IF)){
+            return parseIfStatement();
+        }
+        if (tokens.match(VAR)){
+            return parseVarStatement();
+        }
+        if (tokens.match(IDENTIFIER)){
+            Token identifier = tokens.consumeToken();
+            if(tokens.matchAndConsume(EQUAL)){
+                AssignmentStatement assignmentStatement = new AssignmentStatement();
+                Expression expression = parseExpression();
+                assignmentStatement.setVariableName(identifier.getStringValue());
+                assignmentStatement.setExpression(expression);
+                return assignmentStatement;
+            }else if(tokens.matchAndConsume(LEFT_PAREN)){
+                ArrayList arguments = new ArrayList();
+                Expression expression = parseExpression();
+                arguments.add(expression);
+                while(tokens.matchAndConsume(COMMA)){
+                    expression = parseExpression();
+                    arguments.add(expression);
+                }
+                FunctionCallExpression functionCallExpression = new FunctionCallExpression(identifier.getStringValue(), arguments);
+                FunctionCallStatement functionCallStatement = new FunctionCallStatement(functionCallExpression);
+                return functionCallStatement;
+            }
+        }
+        return null;
+    }
+
+    private Statement parseVarStatement() {
+        VariableStatement variableStatement = new VariableStatement();
+        Token start = tokens.consumeToken();
+        variableStatement.setStart(start);
+        Token varIdentifier = require(IDENTIFIER, variableStatement);
+        variableStatement.setVariableName(varIdentifier.getStringValue());
+        if(tokens.matchAndConsume(COLON)){
+            variableStatement.setExplicitType(parseTypeExpression().getType());
+        }
+        require(EQUAL, variableStatement);
+        Expression expression = parseExpression();
+        variableStatement.setExpression(expression);
+        variableStatement.setEnd(expression.getEnd());
+        //variableStatement.validate();
+        return variableStatement;
+    }
+
+    private Statement parseIfStatement() {
+        IfStatement ifStatement = new IfStatement();
+        ifStatement.setStart(tokens.consumeToken());
+        require(LEFT_PAREN, ifStatement);
+        Expression expression = parseExpression();
+        require(RIGHT_PAREN, ifStatement);
+        require(LEFT_BRACE, ifStatement);
+        ArrayList<Statement> statements = new ArrayList<>();
+        Statement statement = parseStatement();
+        statements.add(statement);
+        while (!tokens.match(RIGHT_BRACE) && !tokens.match(EOF)) {
+            tokens.consumeToken();
+            statement = parseStatement();
+            statements.add(statement);
+        }
+        require(RIGHT_BRACE, ifStatement);
+        ArrayList<Statement> elseStatements = new ArrayList<>();
+        if(tokens.match(ELSE)){
+            tokens.consumeToken();
+            if(tokens.match(LEFT_BRACE)) {
+                tokens.consumeToken();
+                if (!tokens.match(EOF)) {
+                    Statement elseStatement = parseStatement();
+                    elseStatements.add(elseStatement);
+                    while (!tokens.match(RIGHT_BRACE) && !tokens.match(EOF)) {
+                        tokens.consumeToken();
+                        elseStatement = parseStatement();
+                        elseStatements.add(elseStatement);
+                    }
+                }
+                require(RIGHT_BRACE, ifStatement);
+            }else{
+                parseIfStatement();
+            }
+        }
+        ifStatement.setExpression(expression);
+        ifStatement.setTrueStatements(statements);
+        ifStatement.setElseStatements(elseStatements);
+        return ifStatement;
     }
 
     private Statement parsePrintStatement() {
@@ -73,6 +229,52 @@ public class CatScriptParser {
             return null;
         }
     }
+
+    private Statement parseForStatement(){
+        Token start = tokens.consumeToken(); // consume 'for'
+        ForStatement forStatement = new ForStatement();
+        forStatement.setStart(start);
+        require(LEFT_PAREN, forStatement);
+        Token loopIdentifier = require(IDENTIFIER, forStatement);
+        require(IN, forStatement);
+        Expression expression = parseExpression();
+        require(RIGHT_PAREN, forStatement);
+        require(LEFT_BRACE, forStatement);
+        ArrayList<Statement> statements = new ArrayList<>();
+        Statement statement = parseStatement();
+        statements.add(statement);
+        while (!tokens.match(RIGHT_BRACE) && !tokens.match(EOF)) {
+            tokens.consumeToken();
+            statement = parseStatement();
+            statements.add(statement);
+        }
+        forStatement.setEnd(require(RIGHT_BRACE, forStatement));
+        forStatement.setVariableName(loopIdentifier.getStringValue());
+        forStatement.setExpression(expression);
+        forStatement.setBody(statements);
+        return forStatement;
+    }
+
+    private TypeLiteral parseTypeExpression(){
+        TypeLiteral typeLiteral = new TypeLiteral();
+        String type = tokens.getCurrentToken().getStringValue();
+        tokens.consumeToken();
+        if(type.equals("int")){
+            typeLiteral.setType(CatscriptType.INT);
+        }else if(type.equals("bool")){
+            typeLiteral.setType(CatscriptType.BOOLEAN);
+        }else if(type.equals("string")){
+            typeLiteral.setType(CatscriptType.STRING);
+        }else if(type.equals("object")){
+            typeLiteral.setType(CatscriptType.OBJECT);
+        }else if(type.equals("list")){
+            require(LESS, typeLiteral);
+            typeLiteral.setType(CatscriptType.ListType.getListType(parseTypeExpression().getType()));
+            require(GREATER, typeLiteral);
+        }
+        return typeLiteral;
+    }
+
 
     //============================================================
     //  Expressions
@@ -169,6 +371,7 @@ public class CatScriptParser {
                 }
                 FunctionCallExpression functionCallExpression = new FunctionCallExpression(identifierToken.getStringValue(), expr);
                 if(tokens.match(RIGHT_PAREN)) {
+                    tokens.consumeToken();
                     return functionCallExpression;
                 }else{
                     functionCallExpression.addError(ErrorType.UNTERMINATED_ARG_LIST);
@@ -201,6 +404,7 @@ public class CatScriptParser {
             parenthesizedExpression.setStart(start);
             parenthesizedExpression.setEnd(parenthesizedExpression.getEnd());
             if(rightParen) {
+                tokens.consumeToken();
                 return parenthesizedExpression;
             }else{
                 SyntaxErrorExpression syntaxErrorExpression = new SyntaxErrorExpression();
@@ -221,6 +425,7 @@ public class CatScriptParser {
             }
             ListLiteralExpression listLiteralExpression = new ListLiteralExpression(expr);
             if(tokens.match(RIGHT_BRACKET)) {
+                tokens.consumeToken();
                 return listLiteralExpression;
             }else{
                 listLiteralExpression.addError(ErrorType.UNTERMINATED_LIST);

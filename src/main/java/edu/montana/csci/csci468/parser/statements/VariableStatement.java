@@ -7,6 +7,7 @@ import edu.montana.csci.csci468.parser.ErrorType;
 import edu.montana.csci.csci468.parser.ParseError;
 import edu.montana.csci.csci468.parser.SymbolTable;
 import edu.montana.csci.csci468.parser.expressions.Expression;
+import edu.montana.csci.csci468.parser.expressions.ListLiteralExpression;
 
 public class VariableStatement extends Statement {
     private Expression expression;
@@ -50,7 +51,17 @@ public class VariableStatement extends Statement {
         } else {
             // TODO if there is an explicit type, ensure it is correct
             //      if not, infer the type from the right hand side expression
-            symbolTable.registerSymbol(variableName, type);
+            if(this.explicitType != null){
+                if(explicitType == expression.getType()){
+                    type = explicitType;
+                    symbolTable.registerSymbol(variableName, type);
+                }else{
+                    addError(ErrorType.INCOMPATIBLE_TYPES);
+                }
+            }else{
+                type = expression.getType();
+                symbolTable.registerSymbol(variableName, type);
+            }
         }
     }
 
@@ -63,7 +74,7 @@ public class VariableStatement extends Statement {
     //==============================================================
     @Override
     public void execute(CatscriptRuntime runtime) {
-        super.execute(runtime);
+        runtime.setValue(variableName, expression.evaluate(runtime));
     }
 
     @Override

@@ -61,7 +61,11 @@ public class UnaryExpression extends Expression {
 
     @Override
     public Object evaluate(CatscriptRuntime runtime) {
-        return super.evaluate(runtime);
+        if(isMinus() && rightHandSide.getType() == CatscriptType.INT){
+            return (-1) * (Integer)rightHandSide.evaluate(runtime);
+        }else{
+            return !(Boolean)rightHandSide.evaluate(runtime);
+        }
     }
 
     @Override
