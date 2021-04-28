@@ -9,279 +9,212 @@
 [INFO] Copying 5 resources
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ CSCI_466_Project ---
-[INFO] Nothing to compile - all classes are up to date
-[INFO] 
-[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ CSCI_466_Project ---
-[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
-[INFO] skip non existing resourceDirectory /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/test/resources
-[INFO] 
-[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ CSCI_466_Project ---
-[INFO] Nothing to compile - all classes are up to date
-[INFO] 
-[INFO] --- maven-surefire-plugin:2.22.1:test (default-test) @ CSCI_466_Project ---
-[INFO] 
-[INFO] -------------------------------------------------------
-[INFO]  T E S T S
-[INFO] -------------------------------------------------------
-[INFO] Running edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest
-[INFO] Tests run: 29, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.067 s - in edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest
-[INFO] Running edu.montana.csci.csci468.parser.CatscriptParserErrorsTest
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in edu.montana.csci.csci468.parser.CatscriptParserErrorsTest
-[INFO] Running edu.montana.csci.csci468.parser.CatscriptParserStatementsTest
-[ERROR] Tests run: 21, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.01 s <<< FAILURE! - in edu.montana.csci.csci468.parser.CatscriptParserStatementsTest
-[ERROR] varStatementWithListType  Time elapsed: 0.001 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:var x : list<int> = [1, 2, 3]
-      ^
-
-Error: Incompatible types
-
-
-	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.varStatementWithListType(CatscriptParserStatementsTest.java:119)
-
-[ERROR] varStatementWithObjectType  Time elapsed: 0 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:var x : object = ""
-      ^
-
-Error: Incompatible types
-
-
-	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.varStatementWithObjectType(CatscriptParserStatementsTest.java:110)
-
-[INFO] Running edu.montana.csci.csci468.parser.CatscriptParserTypeCheckingTest
-[ERROR] Tests run: 10, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.001 s <<< FAILURE! - in edu.montana.csci.csci468.parser.CatscriptParserTypeCheckingTest
-[ERROR] assignmentTypeError  Time elapsed: 0.001 s  <<< ERROR!
-java.lang.NullPointerException
-	at edu.montana.csci.csci468.parser.CatscriptParserTypeCheckingTest.assignmentTypeError(CatscriptParserTypeCheckingTest.java:55)
-
-[INFO] Running edu.montana.csci.csci468.parser.CatscriptParserSymbolCheckingTest
-[ERROR] Tests run: 8, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.009 s <<< FAILURE! - in edu.montana.csci.csci468.parser.CatscriptParserSymbolCheckingTest
-[ERROR] paramsConflictWithGlobalVars  Time elapsed: 0.001 s  <<< ERROR!
-java.lang.NullPointerException
-	at edu.montana.csci.csci468.parser.CatscriptParserSymbolCheckingTest.paramsConflictWithGlobalVars(CatscriptParserSymbolCheckingTest.java:46)
-
-[ERROR] functionFunctionConflict  Time elapsed: 0.001 s  <<< ERROR!
-java.lang.NullPointerException
-	at edu.montana.csci.csci468.parser.CatscriptParserSymbolCheckingTest.functionFunctionConflict(CatscriptParserSymbolCheckingTest.java:34)
-
-[INFO] Running edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest
-[ERROR] Tests run: 9, Failures: 1, Errors: 5, Skipped: 0, Time elapsed: 0.044 s <<< FAILURE! - in edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest
-[ERROR] recursiveFunctionWorksProperly  Time elapsed: 0 s  <<< ERROR!
-java.lang.NullPointerException
-	at edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest.recursiveFunctionWorksProperly(CatscriptStatementExecutionTest.java:75)
-
-[ERROR] localVarStatementsWorkProperly  Time elapsed: 0 s  <<< ERROR!
-java.lang.NullPointerException
-	at edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest.localVarStatementsWorkProperly(CatscriptStatementExecutionTest.java:43)
-
-[ERROR] functionDeclarationWorksProperly  Time elapsed: 0.02 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 2:foo(1)
-       ^
-
-Error: Unexpected Token
-
-Line 3:foo(2)
-        ^
-
-Error: Unexpected Token
-
-Line 4:foo(3)
-         ^
-
-Error: Unexpected Token
-
-
-	at edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest.functionDeclarationWorksProperly(CatscriptStatementExecutionTest.java:66)
-
-[ERROR] returnStatementWorks  Time elapsed: 0.007 s  <<< ERROR!
-java.lang.UnsupportedOperationException: evaluate needs to be implemented for edu.montana.csci.csci468.parser.expressions.FunctionCallExpression
-	at edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest.returnStatementWorks(CatscriptStatementExecutionTest.java:88)
-
-[ERROR] varInsideFunctionWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
-java.lang.UnsupportedOperationException: evaluate needs to be implemented for edu.montana.csci.csci468.parser.expressions.FunctionCallExpression
-	at edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest.varInsideFunctionWorksProperly(CatscriptStatementExecutionTest.java:51)
-
-[ERROR] ifStatementWorksProperly  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: 
-expected: <1
-> but was: <>
-	at edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest.ifStatementWorksProperly(CatscriptStatementExecutionTest.java:24)
-
-[INFO] Running edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest
-[ERROR] Tests run: 14, Failures: 0, Errors: 14, Skipped: 0, Time elapsed: 0.009 s <<< FAILURE! - in edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest
-[ERROR] listTypeWithComponentTypeArgWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:function foo(x : list<int>) { print(x) }foo([1, 2, 3])
-      ^
-
-Error: Unexpected Token
-
-
-	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.listTypeWithComponentTypeArgWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:56)
-
-[ERROR] stringTypeArgWorksProperly  Time elapsed: 0 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:function foo(x : string) { print(x) }foo("foo")
-      ^
-
-Error: Unexpected Token
-
-
-	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.stringTypeArgWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:44)
-
-[ERROR] noTypeArgWorksProperly  Time elapsed: 0 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:function foo(x) { print(x) }foo(1)
-      ^
-
-Error: Unexpected Token
-
-
-	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.noTypeArgWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:20)
-
-[ERROR] mutliArgumentFunctionsWork  Time elapsed: 0 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:function foo(x, y, z) { print(x) }foo(1, 2, 3)
-      ^
-
-Error: Unexpected Token
-
-
-	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.mutliArgumentFunctionsWork(CatscriptFunctionArgsAndReturnEvalTest.java:62)
-
-[ERROR] returnBoolWorksProperly  Time elapsed: 0 s  <<< ERROR!
-java.lang.UnsupportedOperationException: evaluate needs to be implemented for edu.montana.csci.csci468.parser.expressions.FunctionCallExpression
-	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.returnBoolWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:88)
-
-[ERROR] returnObjectWorksProperly  Time elapsed: 0 s  <<< ERROR!
-java.lang.UnsupportedOperationException: evaluate needs to be implemented for edu.montana.csci.csci468.parser.expressions.FunctionCallExpression
-	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.returnObjectWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:72)
-
-[ERROR] returnListWithComponentTypeWorksProperly  Time elapsed: 0 s  <<< ERROR!
-java.lang.UnsupportedOperationException: evaluate needs to be implemented for edu.montana.csci.csci468.parser.expressions.FunctionCallExpression
-	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.returnListWithComponentTypeWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:101)
-
-[ERROR] returnListWorksProperly  Time elapsed: 0 s  <<< ERROR!
-java.lang.NullPointerException
-	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.returnListWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:94)
-
-[ERROR] objectTypeArgWorksProperly  Time elapsed: 0 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:function foo(x : object) { print(x) }foo(1)
-      ^
-
-Error: Unexpected Token
-
-
-	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.objectTypeArgWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:26)
-
-[ERROR] voidFunctionWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
-java.lang.NullPointerException
-	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.voidFunctionWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:12)
-
-[ERROR] listTypeArgWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
-java.lang.NullPointerException
-	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.listTypeArgWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:50)
-
-[ERROR] intTypeArgWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:function foo(x : int) { print(x) }foo(1)
-      ^
-
-Error: Unexpected Token
-
-
-	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.intTypeArgWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:32)
-
-[ERROR] booleanTypeArgWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:function foo(x : bool) { print(x) }foo(true)
-      ^
-
-Error: Unexpected Token
-
-
-	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.booleanTypeArgWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:38)
-
-[ERROR] returnIntWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
-java.lang.UnsupportedOperationException: evaluate needs to be implemented for edu.montana.csci.csci468.parser.expressions.FunctionCallExpression
-	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.returnIntWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:82)
-
-[INFO] Running edu.montana.csci.csci468.eval.CatscriptBasicExpressionEvalTest
-[ERROR] Tests run: 8, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.003 s <<< FAILURE! - in edu.montana.csci.csci468.eval.CatscriptBasicExpressionEvalTest
-[ERROR] literalExpressionsEvaluatesProperly  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: java.util.Arrays$ArrayList@1afd44cb<[1, 2, 3]> but was: java.util.LinkedList@6973b51b<[1, 2, 3]>
-	at edu.montana.csci.csci468.eval.CatscriptBasicExpressionEvalTest.literalExpressionsEvaluatesProperly(CatscriptBasicExpressionEvalTest.java:18)
-
-[INFO] Running edu.montana.csci.csci468.tokenizer.CatScriptTokenizerTest
-[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.013 s - in edu.montana.csci.csci468.tokenizer.CatScriptTokenizerTest
-[INFO] 
-[INFO] Results:
-[INFO] 
-[ERROR] Failures: 
-[ERROR]   CatscriptBasicExpressionEvalTest.literalExpressionsEvaluatesProperly:18 expected: java.util.Arrays$ArrayList@1afd44cb<[1, 2, 3]> but was: java.util.LinkedList@6973b51b<[1, 2, 3]>
-[ERROR]   CatscriptStatementExecutionTest.ifStatementWorksProperly:24 expected: <1
-> but was: <>
-[ERROR] Errors: 
-[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.booleanTypeArgWorksProperly:38->CatscriptTestBase.executeProgram:102 » ParseError
-[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.intTypeArgWorksProperly:32->CatscriptTestBase.executeProgram:102 » ParseError
-[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.listTypeArgWorksProperly:50->CatscriptTestBase.executeProgram:102 » NullPointer
-[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.listTypeWithComponentTypeArgWorksProperly:56->CatscriptTestBase.executeProgram:102 » ParseError
-[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.mutliArgumentFunctionsWork:62->CatscriptTestBase.executeProgram:102 » ParseError
-[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.noTypeArgWorksProperly:20->CatscriptTestBase.executeProgram:102 » ParseError
-[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.objectTypeArgWorksProperly:26->CatscriptTestBase.executeProgram:102 » ParseError
-[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.returnBoolWorksProperly:88->CatscriptTestBase.executeProgram:103 » UnsupportedOperation
-[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.returnIntWorksProperly:82->CatscriptTestBase.executeProgram:103 » UnsupportedOperation
-[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.returnListWithComponentTypeWorksProperly:101->CatscriptTestBase.executeProgram:103 » UnsupportedOperation
-[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.returnListWorksProperly:94->CatscriptTestBase.executeProgram:102 » NullPointer
-[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.returnObjectWorksProperly:72->CatscriptTestBase.executeProgram:103 » UnsupportedOperation
-[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.stringTypeArgWorksProperly:44->CatscriptTestBase.executeProgram:102 » ParseError
-[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.voidFunctionWorksProperly:12->CatscriptTestBase.executeProgram:102 » NullPointer
-[ERROR]   CatscriptStatementExecutionTest.functionDeclarationWorksProperly:66->CatscriptTestBase.executeProgram:102 » ParseError
-[ERROR]   CatscriptStatementExecutionTest.localVarStatementsWorkProperly:43->CatscriptTestBase.executeProgram:101 » NullPointer
-[ERROR]   CatscriptStatementExecutionTest.recursiveFunctionWorksProperly:75->CatscriptTestBase.executeProgram:101 » NullPointer
-[ERROR]   CatscriptStatementExecutionTest.returnStatementWorks:88->CatscriptTestBase.executeProgram:103 » UnsupportedOperation
-[ERROR]   CatscriptStatementExecutionTest.varInsideFunctionWorksProperly:51->CatscriptTestBase.executeProgram:103 » UnsupportedOperation
-[ERROR]   CatscriptParserStatementsTest.varStatementWithListType:119->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » ParseError
-[ERROR]   CatscriptParserStatementsTest.varStatementWithObjectType:110->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » ParseError
-[ERROR]   CatscriptParserSymbolCheckingTest.functionFunctionConflict:34->CatscriptTestBase.getParseError:85 » NullPointer
-[ERROR]   CatscriptParserSymbolCheckingTest.paramsConflictWithGlobalVars:46->CatscriptTestBase.getParseError:85 » NullPointer
-[ERROR]   CatscriptParserTypeCheckingTest.assignmentTypeError:55->CatscriptTestBase.getParseError:85 » NullPointer
-[INFO] 
-[ERROR] Tests run: 115, Failures: 2, Errors: 24, Skipped: 0
-[INFO] 
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 47 source files to /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/target/classes
+[INFO] -------------------------------------------------------------
+[WARNING] COMPILATION WARNING : 
+[INFO] -------------------------------------------------------------
+[WARNING] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/bytecode/MethodGenerator.java: /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/bytecode/MethodGenerator.java uses or overrides a deprecated API.
+[WARNING] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/bytecode/MethodGenerator.java: Recompile with -Xlint:deprecation for details.
+[WARNING] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/CatscriptType.java: Some input files use unchecked or unsafe operations.
+[WARNING] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/CatscriptType.java: Recompile with -Xlint:unchecked for details.
+[INFO] 4 warnings 
+[INFO] -------------------------------------------------------------
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/ParseElement.java:[3,49] package com.sun.xml.internal.ws.org.objectweb.asm does not exist
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/FunctionDefinitionStatement.java:[3,49] package com.sun.xml.internal.ws.org.objectweb.asm does not exist
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/VariableStatement.java:[3,49] package com.sun.xml.internal.ws.org.objectweb.asm does not exist
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[3,41] package com.sun.javafx.scene.control.skin does not exist
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[4,49] package com.sun.xml.internal.ws.org.objectweb.asm does not exist
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[3,49] package com.sun.xml.internal.ws.org.objectweb.asm does not exist
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/IdentifierExpression.java:[3,49] package com.sun.xml.internal.ws.org.objectweb.asm does not exist
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/ParseElement.java:[142,39] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.ParseElement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/ParseElement.java:[146,39] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.ParseElement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/ParseElement.java:[154,39] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.ParseElement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/ParseElement.java:[158,39] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.ParseElement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/FunctionDefinitionStatement.java:[158,25] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.FunctionDefinitionStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/VariableStatement.java:[97,42] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.VariableStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/VariableStatement.java:[101,40] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.VariableStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/VariableStatement.java:[107,42] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.VariableStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/VariableStatement.java:[111,40] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.VariableStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[69,33] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.expressions.ListLiteralExpression
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[70,29] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.expressions.ListLiteralExpression
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[71,35] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.expressions.ListLiteralExpression
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[73,33] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.expressions.ListLiteralExpression
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[76,39] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.expressions.ListLiteralExpression
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[77,33] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.expressions.ListLiteralExpression
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[101,35] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[103,32] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[106,32] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[107,35] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[110,33] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[113,32] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[114,35] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[116,33] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[121,36] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[123,36] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[130,33] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/IdentifierExpression.java:[56,36] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.expressions.IdentifierExpression
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/IdentifierExpression.java:[58,38] cannot find symbol
+  symbol:   variable Opcodes
+  location: class edu.montana.csci.csci468.parser.expressions.IdentifierExpression
+[INFO] 35 errors 
+[INFO] -------------------------------------------------------------
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  2.569 s
-[INFO] Finished at: 2021-04-27T10:43:12-06:00
+[INFO] Total time:  3.309 s
+[INFO] Finished at: 2021-04-28T14:01:00-06:00
 [INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.22.1:test (default-test) on project CSCI_466_Project: There are test failures.
-[ERROR] 
-[ERROR] Please refer to /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/target/surefire-reports for the individual test results.
-[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.1:compile (default-compile) on project CSCI_466_Project: Compilation failure: Compilation failure: 
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/ParseElement.java:[3,49] package com.sun.xml.internal.ws.org.objectweb.asm does not exist
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/FunctionDefinitionStatement.java:[3,49] package com.sun.xml.internal.ws.org.objectweb.asm does not exist
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/VariableStatement.java:[3,49] package com.sun.xml.internal.ws.org.objectweb.asm does not exist
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[3,41] package com.sun.javafx.scene.control.skin does not exist
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[4,49] package com.sun.xml.internal.ws.org.objectweb.asm does not exist
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[3,49] package com.sun.xml.internal.ws.org.objectweb.asm does not exist
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/IdentifierExpression.java:[3,49] package com.sun.xml.internal.ws.org.objectweb.asm does not exist
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/ParseElement.java:[142,39] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.ParseElement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/ParseElement.java:[146,39] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.ParseElement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/ParseElement.java:[154,39] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.ParseElement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/ParseElement.java:[158,39] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.ParseElement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/FunctionDefinitionStatement.java:[158,25] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.FunctionDefinitionStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/VariableStatement.java:[97,42] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.VariableStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/VariableStatement.java:[101,40] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.VariableStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/VariableStatement.java:[107,42] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.VariableStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/VariableStatement.java:[111,40] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.VariableStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[69,33] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.expressions.ListLiteralExpression
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[70,29] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.expressions.ListLiteralExpression
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[71,35] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.expressions.ListLiteralExpression
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[73,33] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.expressions.ListLiteralExpression
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[76,39] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.expressions.ListLiteralExpression
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/ListLiteralExpression.java:[77,33] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.expressions.ListLiteralExpression
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[101,35] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[103,32] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[106,32] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[107,35] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[110,33] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[113,32] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[114,35] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[116,33] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[121,36] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[123,36] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/statements/ForStatement.java:[130,33] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.statements.ForStatement
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/IdentifierExpression.java:[56,36] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.expressions.IdentifierExpression
+[ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/expressions/IdentifierExpression.java:[58,38] cannot find symbol
+[ERROR]   symbol:   variable Opcodes
+[ERROR]   location: class edu.montana.csci.csci468.parser.expressions.IdentifierExpression
 [ERROR] -> [Help 1]
 [ERROR] 
 [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
