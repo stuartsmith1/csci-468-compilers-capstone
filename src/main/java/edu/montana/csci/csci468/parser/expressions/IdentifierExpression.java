@@ -1,5 +1,6 @@
 package edu.montana.csci.csci468.parser.expressions;
 
+import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 import edu.montana.csci.csci468.bytecode.ByteCodeGenerator;
 import edu.montana.csci.csci468.eval.CatscriptRuntime;
 import edu.montana.csci.csci468.parser.CatscriptType;
@@ -50,7 +51,12 @@ public class IdentifierExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+        Integer integer = code.resolveLocalStorageSlotFor(name);
+        if(integer != null){
+            code.addVarInstruction(Opcodes.ILOAD, integer);
+        }else{
+            code.addFieldInstruction(Opcodes.GETFIELD, name, "I", code.getProgramInternalName());
+        }
     }
 
 

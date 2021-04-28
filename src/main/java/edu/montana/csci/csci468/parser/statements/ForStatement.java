@@ -1,5 +1,6 @@
 package edu.montana.csci.csci468.parser.statements;
 
+import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 import edu.montana.csci.csci468.bytecode.ByteCodeGenerator;
 import edu.montana.csci.csci468.eval.CatscriptRuntime;
 import edu.montana.csci.csci468.parser.CatscriptType;
@@ -8,6 +9,8 @@ import edu.montana.csci.csci468.parser.ParseError;
 import edu.montana.csci.csci468.parser.SymbolTable;
 import edu.montana.csci.csci468.parser.expressions.Expression;
 
+import java.awt.*;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -89,7 +92,43 @@ public class ForStatement extends Statement {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+
+        Integer iteratorSlot = code.nextLocalStorageSlot();
+        org.objectweb.asm.Label iterationStart = new org.objectweb.asm.Label();
+        org.objectweb.asm.Label end = new org.objectweb.asm.Label();
+
+        expression.compile(code);
+        code.addMethodInstruction(Opcodes.INVOKEINTERFACE, ByteCodeGenerator.internalNameFor(List.class),
+                "iterator", "()Ljava/util/Iterator");
+        code.addVarInstruction(Opcodes.ASTORE, iteratorSlot);
+        code.addLabel(iterationStart);
+
+        code.addVarInstruction(Opcodes.ALOAD, iteratorSlot);
+        code.addMethodInstruction(Opcodes.INVOKEINTERFACE, ByteCodeGenerator.internalNameFor(Iterator.class),
+                "hasNext", "()Z");
+
+        code.addJumpInstruction(Opcodes.IFEQ, end);
+
+        CatscriptType componentType = getComponentType();
+        code.addVarInstruction(Opcodes.ALOAD, iteratorSlot);
+        code.addMethodInstruction(Opcodes.INVOKEINTERFACE, ByteCodeGenerator.internalNameFor(Iterator.class),
+                "next", "()Ljava/lang/Object");
+        code.addTypeInstruction(Opcodes.CHECKCAST, ByteCodeGenerator.internalNameFor(componentType.getJavaType()));
+        unbox(code, componentType);
+
+        Integer iteratorVariableSlot = code.createLocalStorageSlotFor(variableName);
+        if(componentType.equals(CatscriptType.INT) || componentType.equals(CatscriptType.BOOLEAN)){
+            code.addVarInstruction(Opcodes.ISTORE, iteratorVariableSlot);
+        }else{
+            code.addVarInstruction(Opcodes.ASTORE, iteratorVariableSlot);
+        }
+
+        for(Statement stat : body){
+            stat.compile(code);
+        }
+
+        code.addJumpInstruction(Opcodes.GOTO, iterationStart);
+        code.addLabel(end);
     }
 
 }

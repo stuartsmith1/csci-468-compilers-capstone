@@ -1,5 +1,6 @@
 package edu.montana.csci.csci468.parser.statements;
 
+import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 import edu.montana.csci.csci468.bytecode.ByteCodeGenerator;
 import edu.montana.csci.csci468.eval.CatscriptRuntime;
 import edu.montana.csci.csci468.eval.ReturnException;
@@ -145,9 +146,7 @@ public class FunctionDefinitionStatement extends Statement {
     // Implementation
     //==============================================================
     @Override
-    public void execute(CatscriptRuntime runtime) {
-
-    }
+    public void execute(CatscriptRuntime runtime) {}
 
     @Override
     public void transpile(StringBuilder javascript) {
@@ -156,6 +155,8 @@ public class FunctionDefinitionStatement extends Statement {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+        code.pushMethod(Opcodes.ACC_PUBLIC, name, getDescriptor());
+
+        code.popMethod();
     }
 }

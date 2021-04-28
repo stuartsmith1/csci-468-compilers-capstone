@@ -22,9 +22,11 @@ public class CatscriptRuntime {
     }
 
     public void pushScope() {
+        scopes.push(globalScope);
     }
 
     public void popScope() {
+        scopes.pop();
     }
 
 }

@@ -66,12 +66,14 @@ public class CatScriptParser {
     }
 
     private Statement parseReturnStatement() {
-        if(tokens.matchAndConsume(RETURN)){
+        if(tokens.match(RETURN)){
             ReturnStatement returnStatement = new ReturnStatement();
+            returnStatement.setStart(tokens.consumeToken());
             returnStatement.setFunctionDefinition(currentFunctionDefinition);
             if(!tokens.match(RIGHT_BRACE)) {
                 Expression expression = parseExpression();
                 returnStatement.setExpression(expression);
+                returnStatement.setEnd(expression.getEnd());
             }
             return returnStatement;
         }
@@ -79,8 +81,9 @@ public class CatScriptParser {
     }
 
     private Statement parseFunctionDeclaration(){
-        if(tokens.matchAndConsume(FUNCTION)){
+        if(tokens.match(FUNCTION)){
             FunctionDefinitionStatement functionDef = new FunctionDefinitionStatement();
+            functionDef.setStart(tokens.consumeToken());
             Token functionName = require(IDENTIFIER, functionDef);
             functionDef.setName(functionName.getStringValue());
             require(LEFT_PAREN, functionDef);
@@ -108,7 +111,7 @@ public class CatScriptParser {
                     Statement statement = parseProgramStatement();
                     statements.add(statement);
                 }
-                require(RIGHT_BRACE, functionDef);
+                functionDef.setEnd(require(RIGHT_BRACE, functionDef));
                 functionDef.setBody(statements);
             }finally {
                 currentFunctionDefinition = null;
@@ -136,20 +139,30 @@ public class CatScriptParser {
             Token identifier = tokens.consumeToken();
             if(tokens.matchAndConsume(EQUAL)){
                 AssignmentStatement assignmentStatement = new AssignmentStatement();
+                assignmentStatement.setStart(identifier);
                 Expression expression = parseExpression();
                 assignmentStatement.setVariableName(identifier.getStringValue());
                 assignmentStatement.setExpression(expression);
+                assignmentStatement.setEnd(expression.getEnd());
                 return assignmentStatement;
-            }else if(tokens.matchAndConsume(LEFT_PAREN)){
+            }else if(tokens.match(LEFT_PAREN)){
+                Token start = tokens.consumeToken();
                 ArrayList arguments = new ArrayList();
-                Expression expression = parseExpression();
-                arguments.add(expression);
-                while(tokens.matchAndConsume(COMMA)){
-                    expression = parseExpression();
+                if(!tokens.match(RIGHT_PAREN)) {
+                    Expression expression = parseExpression();
                     arguments.add(expression);
+                    while (tokens.matchAndConsume(COMMA)) {
+                        expression = parseExpression();
+                        arguments.add(expression);
+                    }
                 }
                 FunctionCallExpression functionCallExpression = new FunctionCallExpression(identifier.getStringValue(), arguments);
                 FunctionCallStatement functionCallStatement = new FunctionCallStatement(functionCallExpression);
+                Token end = require(RIGHT_PAREN, functionCallExpression);
+                functionCallExpression.setStart(start);
+                functionCallExpression.setEnd(end);
+                functionCallStatement.setStart(start);
+                functionCallStatement.setEnd(end);
                 return functionCallStatement;
             }
         }

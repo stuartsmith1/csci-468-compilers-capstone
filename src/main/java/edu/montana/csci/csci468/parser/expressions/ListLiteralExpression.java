@@ -1,5 +1,7 @@
 package edu.montana.csci.csci468.parser.expressions;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
+import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 import edu.montana.csci.csci468.bytecode.ByteCodeGenerator;
 import edu.montana.csci.csci468.eval.CatscriptRuntime;
 import edu.montana.csci.csci468.parser.CatscriptType;
@@ -50,7 +52,11 @@ public class ListLiteralExpression extends Expression {
 
     @Override
     public Object evaluate(CatscriptRuntime runtime) {
-        return values;
+        List<Object> objects = new LinkedList<>();
+        for (Expression value : values) {
+            objects.add(value.evaluate(runtime));
+        }
+        return objects;
     }
 
     @Override
@@ -60,7 +66,16 @@ public class ListLiteralExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+        code.addTypeInstruction(Opcodes.NEW, ByteCodeGenerator.internalNameFor(LinkedList.class));
+        code.addInstruction(Opcodes.DUP);
+        code.addMethodInstruction(Opcodes.INVOKESPECIAL, ByteCodeGenerator.internalNameFor(LinkedList.class), "<init>", "()V");
+        for (Expression value : values) {
+            code.addInstruction(Opcodes.DUP);
+            value.compile(code);
+            box(code, value.getType());
+            code.addMethodInstruction(Opcodes.INVOKEVIRTUAL,ByteCodeGenerator.internalNameFor(LinkedList.class), "add", "(Ljava/lang/Object;)Z");
+            code.addInstruction(Opcodes.POP);
+        }
     }
 
 

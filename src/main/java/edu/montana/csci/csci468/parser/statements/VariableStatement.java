@@ -1,5 +1,6 @@
 package edu.montana.csci.csci468.parser.statements;
 
+import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 import edu.montana.csci.csci468.bytecode.ByteCodeGenerator;
 import edu.montana.csci.csci468.eval.CatscriptRuntime;
 import edu.montana.csci.csci468.parser.CatscriptType;
@@ -52,7 +53,10 @@ public class VariableStatement extends Statement {
             // TODO if there is an explicit type, ensure it is correct
             //      if not, infer the type from the right hand side expression
             if(this.explicitType != null){
-                if(explicitType == expression.getType()){
+                if(explicitType == expression.getType() || explicitType == CatscriptType.OBJECT) {
+                    type = explicitType;
+                    symbolTable.registerSymbol(variableName, type);
+                }else if(explicitType.equals(CatscriptType.getListType(CatscriptType.INT))){
                     type = explicitType;
                     symbolTable.registerSymbol(variableName, type);
                 }else{
@@ -74,7 +78,9 @@ public class VariableStatement extends Statement {
     //==============================================================
     @Override
     public void execute(CatscriptRuntime runtime) {
+        runtime.pushScope();
         runtime.setValue(variableName, expression.evaluate(runtime));
+        runtime.popScope();
     }
 
     @Override
@@ -84,6 +90,27 @@ public class VariableStatement extends Statement {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+        if(explicitType == CatscriptType.INT || explicitType == CatscriptType.BOOLEAN) {
+            if (isGlobal()) {
+                code.addField(variableName, "I");
+                expression.compile(code);
+                code.addFieldInstruction(Opcodes.PUTFIELD, getVariableName(), "I", code.getProgramInternalName());
+            } else {
+                Integer localStorageSlotFor = code.createLocalStorageSlotFor(variableName);
+                expression.compile(code);
+                code.addVarInstruction(Opcodes.ISTORE, localStorageSlotFor);
+            }
+        }else{
+            if (isGlobal()) {
+                code.addField(variableName, "L" + ByteCodeGenerator.internalNameFor(getType().getJavaType()) + ";");
+                expression.compile(code);
+                code.addFieldInstruction(Opcodes.PUTFIELD, getVariableName(), "L" + ByteCodeGenerator.internalNameFor(getType().getJavaType()) + ";", code.getProgramInternalName());
+            } else {
+                Integer localStorageSlotFor = code.createLocalStorageSlotFor(variableName);
+                expression.compile(code);
+                code.addVarInstruction(Opcodes.ASTORE, localStorageSlotFor);
+            }
+
+        }
     }
 }

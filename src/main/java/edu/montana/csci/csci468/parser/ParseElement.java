@@ -1,5 +1,6 @@
 package edu.montana.csci.csci468.parser;
 
+import com.sun.xml.internal.ws.org.objectweb.asm.Opcodes;
 import edu.montana.csci.csci468.bytecode.ByteCodeGenerator;
 import edu.montana.csci.csci468.eval.CatscriptRuntime;
 import edu.montana.csci.csci468.parser.statements.CatScriptProgram;
@@ -137,10 +138,26 @@ public abstract class ParseElement {
 
     protected void box(ByteCodeGenerator code, CatscriptType type) {
         // TODO - implement
+        if (type.equals(CatscriptType.INT)){
+            code.addMethodInstruction(Opcodes.INVOKESTATIC, ByteCodeGenerator.internalNameFor(Integer.class),
+                    "valueOf", "(I)Ljava/lang/Integer;");
+        }
+        if (type.equals(CatscriptType.BOOLEAN)){
+            code.addMethodInstruction(Opcodes.INVOKESTATIC, ByteCodeGenerator.internalNameFor(Boolean.class),
+                    "valueOf", "(I)Ljava/lang/Boolean;");
+        }
     }
 
     protected void unbox(ByteCodeGenerator code, CatscriptType type) {
         // TODO - implement
+        if (type.equals(CatscriptType.INT)){
+            code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, ByteCodeGenerator.internalNameFor(Integer.class),
+                    "intValue", "()I");
+        }
+        if (type.equals(CatscriptType.BOOLEAN)){
+            code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, ByteCodeGenerator.internalNameFor(Boolean.class),
+                    "booleanValue", "()Z;");
+        }
     }
 
 
