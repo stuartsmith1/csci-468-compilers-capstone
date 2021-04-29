@@ -120,8 +120,8 @@
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  3.309 s
-[INFO] Finished at: 2021-04-28T14:01:00-06:00
+[INFO] Total time:  2.977 s
+[INFO] Finished at: 2021-04-29T09:47:19-06:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.1:compile (default-compile) on project CSCI_466_Project: Compilation failure: Compilation failure: 
 [ERROR] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/stuart_smith/src/main/java/edu/montana/csci/csci468/parser/ParseElement.java:[3,49] package com.sun.xml.internal.ws.org.objectweb.asm does not exist
