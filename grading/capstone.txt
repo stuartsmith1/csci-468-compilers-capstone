@@ -1,4 +1,4 @@
 Errors:
 
 - Missing source zip
-- Missing Stuart_Smith_portfolio.pdf
+- Missing stuart_smith_portfolio.pdf
