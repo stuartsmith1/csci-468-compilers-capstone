@@ -420,8 +420,8 @@ public class CatScriptParser {
                 tokens.consumeToken();
                 return parenthesizedExpression;
             }else{
-                SyntaxErrorExpression syntaxErrorExpression = new SyntaxErrorExpression();
-                syntaxErrorExpression.setToken(tokens.consumeToken());
+                SyntaxErrorExpression syntaxErrorExpression = new SyntaxErrorExpression(tokens.consumeToken());
+                //syntaxErrorExpression.setToken(tokens.consumeToken());
                 return syntaxErrorExpression;
             }
         }else if (tokens.match(LEFT_BRACKET)) {
@@ -445,8 +445,8 @@ public class CatScriptParser {
                 return listLiteralExpression;
             }
         } else {
-            SyntaxErrorExpression syntaxErrorExpression = new SyntaxErrorExpression();
-            syntaxErrorExpression.setToken(tokens.consumeToken());
+            SyntaxErrorExpression syntaxErrorExpression = new SyntaxErrorExpression(tokens.consumeToken());
+            //syntaxErrorExpression.setToken(tokens.consumeToken());
             return syntaxErrorExpression;
         }
     }
