@@ -21,7 +21,7 @@ public class TokenList implements Iterable<Token> {
     }
 
     void addToken(TokenType eof, String stringValue, int start, int end, int line, int lineOffset) {
-        tokens.add(new Token(start, end, line, lineOffset, stringValue, eof, tokenizer));
+        tokens.add(new Token(start, end, line, lineOffset - (end - start), stringValue, eof, tokenizer));
     }
 
     public Token getCurrentToken() {
@@ -64,7 +64,7 @@ public class TokenList implements Iterable<Token> {
     }
 
     public boolean hasMoreTokens() {
-        return !getCurrentToken().getType().equals(EOF);
+        return currentToken < tokens.size() - 1;
     }
 
     public Token lastToken() {
