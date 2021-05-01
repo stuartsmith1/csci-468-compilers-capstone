@@ -1,4 +1,1 @@
-Errors:
-
-- Missing source zip
-- Missing stuart_smith_portfolio.pdf
+All Good
